@@ -1,5 +1,5 @@
 [project]
-name = "vendoor-mcp-server"
+name = "vendoor-agents"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -7,19 +7,16 @@ requires-python = ">=3.13"
 dependencies = [
     "environs>=14.2.0",
     "httpx>=0.28.1",
-    "mcp>=1.10.1",
+    "llama-index-core>=0.12.48",
+    "llama-index-llms-groq>=0.3.2",
+    "llama-index-utils-workflow>=0.3.5",
+    "llama-index-workflow>=1.0.1",
     "pydantic>=2.11.7",
     "python-dotenv>=1.1.1",
 ]
 
-
-[tool.ruff.format]
-quote-style = "single"
-docstring-code-format = true
-
-[tool.pyright]
-venvPath = "."
-venv = ".venv"
-
 [dependency-groups]
-dev = ["ruff>=0.12.2"]
+dev = [
+    "ruff>=0.12.3",
+]
+

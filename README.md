@@ -1,1 +1,0 @@
-# vendoor-agents

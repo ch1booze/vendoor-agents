@@ -1,7 +1,6 @@
-from mcp.server.fastmcp import FastMCP
+def main():
+    print("Hello from vendoor-agents!")
 
-mcp = FastMCP(name='vendoor')
 
-
-if __name__ == '__main__':
-    mcp.run(transport='streamable-http')
+if __name__ == "__main__":
+    main()
