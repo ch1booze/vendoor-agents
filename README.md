@@ -1,1 +1,1 @@
-# vendoor-mcp-server
+# vendoor-agents
