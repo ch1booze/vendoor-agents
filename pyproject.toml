@@ -7,10 +7,8 @@ requires-python = ">=3.13"
 dependencies = [
     "environs>=14.2.0",
     "httpx>=0.28.1",
-    "llama-index-core>=0.12.48",
-    "llama-index-llms-groq>=0.3.2",
-    "llama-index-utils-workflow>=0.3.5",
-    "llama-index-workflow>=1.0.1",
+    "jsonref>=1.1.0",
+    "mcp>=1.12.1",
     "pydantic>=2.11.7",
     "python-dotenv>=1.1.1",
 ]

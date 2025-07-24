@@ -18,6 +18,7 @@ class CustomerIntent(StrEnum):
     CANCEL_ORDER = "cancel_order"
 
     REQUEST_HUMAN_AGENT = "request_human_agent"
+    UNKNOWN = "unknown"
 
 
 customer_intent_explanations = {
