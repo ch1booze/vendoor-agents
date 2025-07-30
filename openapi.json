@@ -1,0 +1,1615 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "operationId": "signup",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupUserBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        },
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully authenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        },
+        "summary": "Authenticate a user and return tokens",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/businesses": {
+      "post": {
+        "operationId": "createBusiness",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBusinessBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Business successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new business for the authenticated user",
+        "tags": [
+          "Businesses"
+        ]
+      },
+      "get": {
+        "operationId": "getBusinesses",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of businesses for the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Business"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get the business associated with the authenticated user",
+        "tags": [
+          "Businesses"
+        ]
+      }
+    },
+    "/businesses/{businessId}": {
+      "get": {
+        "operationId": "getBusiness",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The unique identifier of the business",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Business details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Business not found"
+          }
+        },
+        "summary": "Get the business associated with the authenticated user",
+        "tags": [
+          "Businesses"
+        ]
+      }
+    },
+    "/businesses/{businessId}/chats": {
+      "post": {
+        "operationId": "createBusinessChat",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The unique identifier of the business",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBusinessChatBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Business chat successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessChat"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new business chat for a specific business",
+        "tags": [
+          "Businesses"
+        ]
+      },
+      "get": {
+        "operationId": "getBusinessChats",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The unique identifier of the business",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of business chats for the business",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BusinessChat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all business chats for a specific business",
+        "tags": [
+          "Businesses"
+        ]
+      }
+    },
+    "/businesses/{businessId}/products": {
+      "post": {
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new product for a business",
+        "tags": [
+          "Products"
+        ]
+      },
+      "get": {
+        "operationId": "getProducts",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceMin",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "priceMax",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "category",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all products for a business",
+        "tags": [
+          "Products",
+          "Customer-Agent"
+        ]
+      }
+    },
+    "/businesses/{businessId}/products/{productId}": {
+      "get": {
+        "operationId": "getProduct",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a specific product by its ID",
+        "tags": [
+          "Products",
+          "Customer-Agent"
+        ]
+      },
+      "put": {
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Product successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update a specific product",
+        "tags": [
+          "Products"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Product successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a specific product",
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/businesses/{businessId}/invoices": {
+      "post": {
+        "operationId": "createInvoice",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business to create the invoice for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Invoice successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new blank invoice",
+        "tags": [
+          "Invoices",
+          "Customer-Agent"
+        ]
+      },
+      "get": {
+        "operationId": "getInvoices",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoices successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Invoice"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all invoices for a business",
+        "tags": [
+          "Invoices"
+        ]
+      }
+    },
+    "/businesses/{businessId}/invoices/{invoiceId}": {
+      "put": {
+        "operationId": "updateInvoice",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invoice successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update an invoice's details",
+        "tags": [
+          "Invoices",
+          "Customer-Agent"
+        ]
+      },
+      "get": {
+        "operationId": "getInvoice",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a specific invoice by its ID",
+        "tags": [
+          "Invoices"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteInvoice",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Invoice successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a specific invoice",
+        "tags": [
+          "Invoices"
+        ]
+      }
+    },
+    "/businesses/{businessId}/invoices/{invoiceId}/items": {
+      "post": {
+        "operationId": "addInvoiceItems",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddInvoiceItemsBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Invoice items successfully added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceItem"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Add one or more items to an invoice",
+        "tags": [
+          "Invoices"
+        ]
+      },
+      "get": {
+        "operationId": "getInvoiceItems",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice items successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceItem"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all items for a specific invoice",
+        "tags": [
+          "Invoices"
+        ]
+      }
+    },
+    "/businesses/{businessId}/invoices/{invoiceId}/items/{itemId}": {
+      "put": {
+        "operationId": "updateInvoiceItem",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "itemId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice item",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceItemBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invoice item successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceItem"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update a specific item on an invoice",
+        "tags": [
+          "Invoices"
+        ]
+      },
+      "delete": {
+        "operationId": "removeInvoiceItem",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "itemId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the invoice item",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Invoice item successfully removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceItem"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Remove a specific item from an invoice",
+        "tags": [
+          "Invoices"
+        ]
+      }
+    },
+    "/businesses/{businessId}/payments/extract": {
+      "post": {
+        "operationId": "extractPaymentDetails",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the business",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "A receipt file (PDF, JPEG, PNG, etc.) up to 5MB",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Extract payment details from a receipt file",
+        "tags": [
+          "Payments",
+          "Customer-Agent"
+        ]
+      }
+    },
+    "/customers": {
+      "post": {
+        "operationId": "createCustomer",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Customer successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new customer for the authenticated user",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/customers/{customerId}/chats": {
+      "post": {
+        "operationId": "createCustomerChat",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerChatBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Customer chat successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerChat"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new chat for a customer",
+        "tags": [
+          "Customers"
+        ]
+      },
+      "get": {
+        "operationId": "getCustomerChats",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "description": "The unique identifier of the customer",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of customer chats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerChat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all chats for a specific customer and business",
+        "tags": [
+          "Customers"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Vendoor API Specification",
+    "description": "",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "SignupUserBody": {
+        "type": "object",
+        "properties": {}
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the user",
+            "example": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The timestamp when the user was created"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The timestamp when the user was last updated"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "User's first name",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "User's last name",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's unique email address",
+            "example": "john.doe@example.com"
+          },
+          "business": {
+            "description": "List of businesses owned by the user",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Business"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "firstName",
+          "lastName",
+          "email",
+          "business"
+        ]
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the product"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "Super Widget"
+          },
+          "description": {
+            "type": "string",
+            "example": "The best widget you can buy."
+          },
+          "price": {
+            "type": "string",
+            "description": "Price of the product as a string to handle various currency formats.",
+            "example": "19.99"
+          },
+          "unit": {
+            "type": "string",
+            "example": "piece"
+          },
+          "category": {
+            "type": "string",
+            "example": "Electronics"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          },
+          "businessId": {
+            "type": "string",
+            "description": "The ID of the business this product belongs to"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "price",
+          "unit",
+          "category",
+          "isActive",
+          "businessId"
+        ]
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "amount": {
+            "type": "string",
+            "example": "19.99"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "method": {
+            "type": "string",
+            "example": "Credit Card"
+          },
+          "narration": {
+            "type": "string",
+            "example": "Payment for INV-001"
+          },
+          "receipt": {
+            "type": "string",
+            "description": "Binary data for the receipt file (e.g., PDF)",
+            "format": "binary"
+          },
+          "sender": {
+            "type": "object",
+            "description": "JSON object containing sender details"
+          },
+          "invoiceId": {
+            "type": "string",
+            "description": "The unique ID of the invoice this payment is for"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "amount",
+          "date",
+          "method",
+          "narration",
+          "receipt",
+          "sender",
+          "invoiceId"
+        ]
+      },
+      "InvoiceItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 2
+          },
+          "invoiceId": {
+            "type": "string"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "productId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "quantity",
+          "invoiceId",
+          "product",
+          "productId"
+        ]
+      },
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the invoice"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the invoice (e.g., \"draft\", \"sent\", \"paid\")",
+            "example": "paid"
+          },
+          "businessId": {
+            "type": "string"
+          },
+          "payment": {
+            "$ref": "#/components/schemas/Payment"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceItem"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "status",
+          "businessId",
+          "items"
+        ]
+      },
+      "Business": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the business"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The timestamp when the business was created"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The timestamp when the business was last updated"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the business",
+            "example": "ACME Corp"
+          },
+          "tags": {
+            "description": "Tags associated with the business",
+            "example": [
+              "tech",
+              "saas"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "A detailed description of the business"
+          },
+          "data": {
+            "type": "object",
+            "description": "Arbitrary JSON data associated with the business"
+          },
+          "user": {
+            "description": "The user who owns this business",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "invoices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Invoice"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "tags",
+          "user",
+          "products",
+          "invoices"
+        ]
+      },
+      "LoginUserBody": {
+        "type": "object",
+        "properties": {}
+      },
+      "LoginUserResponse": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateBusinessBody": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "userId",
+          "name",
+          "tags",
+          "description",
+          "data"
+        ]
+      },
+      "CreateBusinessChatBody": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "BusinessChat": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "query": {
+            "type": "string",
+            "example": "What are my total sales for this month?"
+          },
+          "reply": {
+            "type": "string",
+            "example": "Your total sales are $1,234.56."
+          },
+          "businessId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "query",
+          "reply",
+          "businessId"
+        ]
+      },
+      "CreateProductBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "price",
+          "unit",
+          "category",
+          "data"
+        ]
+      },
+      "UpdateProductBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "price",
+          "unit",
+          "category"
+        ]
+      },
+      "UpdateInvoiceBody": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "AddInvoiceItemsBody": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "UpdateInvoiceItemBody": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "quantity"
+        ]
+      },
+      "CreateCustomerBody": {
+        "type": "object",
+        "properties": {
+          "contact": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "contact",
+          "platform"
+        ]
+      },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contact": {
+            "type": "string",
+            "description": "Contact info (e.g., phone number, email)",
+            "example": "+15551234567"
+          },
+          "platform": {
+            "type": "string",
+            "description": "Platform the customer came from",
+            "example": "whatsapp"
+          }
+        },
+        "required": [
+          "id",
+          "contact",
+          "platform"
+        ]
+      },
+      "CreateCustomerChatBody": {
+        "type": "object",
+        "properties": {
+          "businessId": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "businessId",
+          "query"
+        ]
+      },
+      "CustomerChat": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "query": {
+            "type": "string",
+            "example": "What is the price of the Super Widget?"
+          },
+          "reply": {
+            "type": "string",
+            "example": "The Super Widget costs $19.99."
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "businessId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "query",
+          "reply",
+          "customerId",
+          "businessId"
+        ]
+      }
+    }
+  }
+}
