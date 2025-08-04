@@ -2,7 +2,7 @@ import json
 
 from intents import customer_intent_explanations
 
-INTENT_PROMPT = f"""
+intent_prompt = f"""
 You are an expert in understanding customer intents based on their input. 
 Your task is to analyze the customer's input and determine their intent from a predefined set of intents.
 

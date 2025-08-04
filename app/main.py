@@ -3,32 +3,47 @@ from typing import Optional
 
 import httpx
 from mcp.server.fastmcp import FastMCP
-from app.openapi import OpenAPISpec, get_openapi_specs
+from openapi import APISchema, load_api_schemas
+from pydantic import ValidationError
 
 app = FastMCP(name="vendoor", stateless_http=False)
 
 
 async def add_tools():
-    openapi_specs: list[OpenAPISpec] = await get_openapi_specs()
-    for spec in openapi_specs:
-
-        @app.tool(name=spec.operation_id, description=spec.description)
+    api_schemas: list[APISchema] = await load_api_schemas()
+    for schema in api_schemas:
+        @app.tool(name=schema.operation_id, description=schema.description)
         async def tool_function(
             params: Optional[dict] = None,
             body: Optional[dict] = None,
         ):
+            if body and schema.request_body_model:
+                try:
+                    request_body_model = schema.request_body_model
+                    request_body_model(**body)
+                except ValidationError as e:
+                    return e
+
             async with httpx.AsyncClient() as client:
                 response = await client.request(
-                    method=spec.method,
-                    url=spec.url,
+                    method=schema.method,
+                    url=schema.url,
                     params=params,
                     json=body,
                 )
                 response.raise_for_status()
-                return response.json()
+                response_data = response.json()
+
+                if schema.response_model:
+                    try:
+                        response_model = schema.response_model
+                        response_model(**response_data)
+                    except ValidationError as e:
+                        return e
+
+                return response_data
 
 
 asyncio.run(add_tools())
 
-if __name__ == "__main__":
-    app.run(transport="streamable-http")
+app.run(transport="streamable-http")
