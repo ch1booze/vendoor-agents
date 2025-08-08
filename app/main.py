@@ -12,6 +12,7 @@ app = FastMCP(name="vendoor", stateless_http=False)
 async def add_tools():
     api_schemas: list[APISchema] = await load_api_schemas()
     for schema in api_schemas:
+
         @app.tool(name=schema.operation_id, description=schema.description)
         async def tool_function(
             params: Optional[dict] = None,
